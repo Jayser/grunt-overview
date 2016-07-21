@@ -36,7 +36,7 @@ module.exports = function (grunt) {
         },
         watch: {
             gruntfile: {
-                files: 'app/**/*.js',
+                files: 'app/**',
                 tasks: ['build']
             }
         }
