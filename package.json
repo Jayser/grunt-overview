@@ -2,17 +2,20 @@
   "name": "grunt-overview",
   "version": "1.0.0",
   "description": "",
-  "main": "Gruntfile.js",
+  "main": "builds/js/main.js",
+  "private": true,
   "dependencies": {
+  },
+  "devDependencies": {
+    "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-concat": "^0.3.0",
     "grunt": "^0.4.5",
     "grunt-contrib-uglify": "^0.2.7",
     "grunt-contrib-watch": "^0.5.3"
   },
-  "devDependencies": {
-    "grunt-contrib-copy": "^1.0.0"
+  "scripts": {
+    "start": "grunt default"
   },
-  "scripts": {},
   "author": "Sarhan Azizov",
   "license": "ISC"
 }
