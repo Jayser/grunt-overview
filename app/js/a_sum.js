@@ -4,4 +4,5 @@
             return prev + parseInt(curr);
         }, 0)
     };
+
 }(window, document));

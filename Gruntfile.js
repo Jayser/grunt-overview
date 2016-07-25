@@ -1,12 +1,17 @@
+var path = require('path');
+
 module.exports = function (grunt) {
     'use strict';
+    var variables = require('./config/variables');
+    var paths = variables.paths;
+
     // Project configuration
     grunt.initConfig({
+
         // Metadata
         pkg: grunt.file.readJSON('package.json'),
-        banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
-            '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author %>;' +
-            ' Licensed <%= pkg.license %> */\n',
+        banner: variables.banner,
+
         // Task configuration
         concat: {
             options: {
@@ -14,8 +19,8 @@ module.exports = function (grunt) {
                 stripBanners: true
             },
             dist: {
-                src: ['app/**/*.js'],
-                dest: 'builds/js/main.js'
+                src: [path.join(paths.app, '/**/*.js')],
+                dest: path.join(paths.builds, '/js/main.js')
             }
         },
         uglify: {
@@ -24,32 +29,36 @@ module.exports = function (grunt) {
             },
             dist: {
                 src: '<%= concat.dist.dest %>',
-                dest: 'builds/js/main.min.js'
+                dest: path.join(paths.builds, '/js/main.js')
             }
         },
         copy: {
             main: {
                 files: [
-                    {expand: true, flatten: true, src: ['app/index.html'], dest: 'builds/', filter: 'isFile'}
+                    {
+                        expand: true,
+                        flatten: true,
+                        src: [path.join(paths.app, '/index.html')],
+                        dest: paths.builds,
+                        filter: 'isFile'
+                    }
                 ]
             }
         },
         watch: {
             gruntfile: {
-                files: 'app/**',
-                tasks: ['build']
+                files: path.join(paths.app, '/**'),
+                tasks: [paths.builds]
             }
         }
     });
 
     // These plugins provide necessary tasks
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-watch');
+    require('load-grunt-tasks')(grunt);
 
     // Default task
     grunt.registerTask('default', ['build', 'watch']);
-    grunt.registerTask('build', ['concat', 'uglify', 'copy']);
+    grunt.registerTask('build', ['concat', 'copy']);
+    grunt.registerTask('prod', ['concat', 'uglify','copy']);
 };
 
