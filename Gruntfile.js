@@ -1,34 +1,21 @@
 var path = require('path');
+var root = path.resolve(__dirname);
 
 module.exports = function (grunt) {
     'use strict';
-    var variables = require('./config/variables');
-    var paths = variables.paths;
 
-    // Project configuration
+    var paths = {
+        root: root,
+            app: path.resolve(root, 'app'),
+            builds: path.resolve(root, 'builds'),
+            baseSass: path.resolve(root, 'assets/sass'),
+            baseStyles: path.resolve(root, 'assets/css')
+    };
+
     grunt.initConfig({
-
-        // Metadata
-        pkg: grunt.file.readJSON('package.json'),
-        banner: variables.banner,
-
-        // Task configuration
         concat: {
-            options: {
-                banner: '<%= banner %>',
-                stripBanners: true
-            },
             dist: {
                 src: [path.join(paths.app, '/**/*.js')],
-                dest: path.join(paths.builds, '/js/main.js')
-            }
-        },
-        uglify: {
-            options: {
-                banner: '<%= banner %>'
-            },
-            dist: {
-                src: '<%= concat.dist.dest %>',
                 dest: path.join(paths.builds, '/js/main.js')
             }
         },
@@ -48,7 +35,7 @@ module.exports = function (grunt) {
         watch: {
             gruntfile: {
                 files: path.join(paths.app, '/**'),
-                tasks: [paths.builds]
+                tasks: ['build']
             }
         }
     });
@@ -59,6 +46,5 @@ module.exports = function (grunt) {
     // Default task
     grunt.registerTask('default', ['build', 'watch']);
     grunt.registerTask('build', ['concat', 'copy']);
-    grunt.registerTask('prod', ['concat', 'uglify','copy']);
 };
 

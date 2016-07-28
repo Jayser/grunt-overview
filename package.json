@@ -9,16 +9,14 @@
     "grunt": "^0.4.5",
     "grunt-contrib-concat": "^0.3.0",
     "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-uglify": "^0.2.7",
     "grunt-contrib-watch": "^0.5.3",
     "http-server": "^0.9.0",
     "load-grunt-tasks": "^3.5.0"
   },
   "scripts": {
-    "openInBrowser": "start http://localhost:8000/builds",
-    "server": "http-server -a localhost -p 8000",
-    "dev": "grunt default",
-    "prod": "grunt prod"
+    "open": "start http://localhost:8085/builds",
+    "server": "http-server -a localhost -p 8085",
+    "build": "grunt default"
   },
   "author": "Sarhan Azizov",
   "license": "ISC"
